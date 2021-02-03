@@ -54,83 +54,64 @@ body {
   font-style: italic;
 }
 
+.end-articles-msg {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 4rem;
+}
+
 /* ------------------------ */
-/* Pagination */
+/* Loading Icon */
 /* ------------------------ */
-.pagination {
-  font-size: 1.5rem;
-  color: #00a1fe;
-  display: flex;
-  flex-direction: column;
-  margin: 7rem 0;
+/* This code for the loading icon has been copied from https://tobiasahlin.com/spinkit */
+.spinner {
+  width: 4rem;
+  height: 4rem;
+
+  position: relative;
+  margin: 2rem auto;
 }
 
-.pagination__buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.double-bounce1,
+.double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  -webkit-animation: sk-bounce 2s infinite ease-in-out;
+  animation: sk-bounce 2s infinite ease-in-out;
 }
 
-.pagination__info {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  color: #666;
+.double-bounce2 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
 }
 
-.pagination__buttons button {
-  width: 5rem;
-  height: 5rem;
-  border: 1px solid rgb(225, 223, 223);
-  background-color: transparent;
-  border-radius: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-  font-size: inherit;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.06);
-  transition: all 0.2s;
-  cursor: pointer;
+@-webkit-keyframes sk-bounce {
+  0%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1);
+  }
 }
 
-.pagination__pages {
-  display: flex;
-}
-
-.pagination__buttons button:hover {
-  background-color: #f9fdff;
-}
-
-.pagination__prev img,
-.pagination__next img {
-  width: 1.5rem;
-}
-
-button.pagination__page {
-  width: 4.2rem;
-  height: 4.2rem;
-}
-
-button.pagination__page--selected {
-  background-color: #d5eefc;
-  pointer-events: none;
-}
-
-button.pagination__page--selected:hover {
-  background-color: #d5eefc;
-}
-
-.pagination__page,
-.pagination__next {
-  margin-left: 1.2rem;
-}
-
-button.pagination__button--disabled {
-  box-shadow: none;
-  opacity: 0.4;
-  pointer-events: none;
+@keyframes sk-bounce {
+  0%,
+  100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
 }
 
 /* ------------------------ */
@@ -170,21 +151,6 @@ button.pagination__button--disabled {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     padding-bottom: 1rem;
-  }
-
-  .pagination__buttons button {
-    width: 3.8rem;
-    height: 3.8rem;
-  }
-
-  button.pagination__page {
-    width: 3.2rem;
-    height: 3.2rem;
-  }
-
-  .pagination__page,
-  .pagination__next {
-    margin-left: 0.8rem;
   }
 }
 
