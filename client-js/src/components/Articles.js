@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Article from "./Article";
+import Loading from "./Loading";
 
 class Articles extends Component {
   constructor(props) {
@@ -8,21 +9,60 @@ class Articles extends Component {
 
     this.state = {
       articles: [],
+      page: 1,
+      hasEnded: false, // to indicate whether or not we've fetched all the records
+      loading: true,
     };
+
+    this.container = React.createRef();
   }
 
   componentDidMount() {
     this.fetch();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.articles.length !== this.state.articles.length) {
+      document.addEventListener("scroll", this.trackScrolling);
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("scroll", this.trackScrolling);
+  }
+
+  trackScrolling = () => {
+    if (
+      this.container.current.getBoundingClientRect().bottom <=
+      window.innerHeight
+    ) {
+      console.log("We've reached the bottom!");
+
+      if (!this.state.hasEnded) {
+        this.setState({ page: this.state.page + 1 }, () => {
+          this.fetch();
+        });
+      }
+
+      document.removeEventListener("scroll", this.trackScrolling);
+    }
+  };
+
   async fetch() {
+    this.setState({ loading: true });
     const { data } = await axios.get(
-      `http://localhost:4080/api/articles?page=1`
+      `http://localhost:4080/api/articles?page=${this.state.page}`
     );
 
-    this.setState({
-      articles: data.articlesData,
-    });
+    if (data.articlesData.length === 0) {
+      this.setState({ hasEnded: true });
+    } else {
+      this.setState({
+        articles: [...this.state.articles, ...data.articlesData],
+      });
+    }
+
+    this.setState({ loading: false });
   }
 
   renderArticles() {
@@ -43,7 +83,17 @@ class Articles extends Component {
   render() {
     if (!this.state.articles) return <div />;
 
-    return <div>{this.renderArticles()}</div>;
+    return (
+      <div ref={this.container}>
+        {this.renderArticles()}
+        {this.state.loading && <Loading />}
+        {this.state.hasEnded && (
+          <div className="end-articles-msg">
+            <p>You're all caught up!</p>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 
