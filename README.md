@@ -1,7 +1,6 @@
-This is the starter code repository that's being used for teaching how to implement an infinite scrolling with React in [this](https://youtu.be/JbhCsuWu8cg) video.
+This is the final solution code we wrote in [this](https://youtu.be/JbhCsuWu8cg) video.
 
-As of now this application will only show 12 articles when we open it, and our job is to
-set up an infinite scrolling so that whenever we reach the bottom of the page, it should send another request to the server to grab the next series of articles.
+This application will show a list of articles with infinite scrolling set up.
 
 ## Installing the dependencies
 
