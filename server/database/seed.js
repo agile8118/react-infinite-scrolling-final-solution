@@ -82,7 +82,7 @@ function random(arr) {
         JSON.stringify({ articles: data }),
         () => {
           console.log(
-            data.length + " records has been saved to the data.json file."
+            data.length + " records have been saved to the data.json file."
           );
           rl.close();
           process.exit(0);
@@ -138,7 +138,7 @@ function random(arr) {
       connection.query(query, function (error, result) {
         if (error) throw error;
         console.log(
-          data.length + " records has been saved to the articles table."
+          data.length + " records have been saved to the articles table."
         );
         rl.close();
         process.exit(0);
@@ -167,7 +167,7 @@ function random(arr) {
       try {
         await Article.insertMany(data);
         console.log(
-          data.length + " records has been saved to the articles collection."
+          data.length + " records have been saved to the articles collection."
         );
       } catch (e) {
         console.log(e);
