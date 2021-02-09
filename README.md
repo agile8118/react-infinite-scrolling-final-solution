@@ -1,4 +1,7 @@
-This application will show a list of articles to the user.
+This is the starter code repository that's being used for teaching how to implement an infinite scrolling with React in [this](https://youtu.be/JbhCsuWu8cg) video.
+
+As of now this application will only show 12 articles when we open it, and our job is to
+set up an infinite scrolling so that whenever we reach the bottom of the page, it should send another request to the server to grab the next series of articles.
 
 ## Installing the dependencies
 
@@ -29,11 +32,9 @@ you need to create a new DB called node-paginate (see server/config/dev.js file)
 
 ## Front-end logic
 
-The front-end is written in vanilla javascript(es6) and css. No framework and library has been used
-in the front-end. We just have webpack which just bundles all the code into a file in the public folder.
+The front-end is written in React.js using create-react-app.
 
-To change the javascript front-end code you need to first start the webpack to be able to apply and see the change.
-To do so from the client-js folder run:
+To start the react server run:
 
 > npm run start
 
@@ -52,8 +53,4 @@ database name in the package.json file for the npm run dev:node command.
 
 > npm run dev
 
-This command will start both the nodejs server and the webpack in one terminal tab.
-
-This is the repository that's being used for teaching how to build a pagination system in [this](https://www.youtube.com/channel/UCEygwyqjUUMj6TOnxMsDjjQ) video.
-To view the final solution checkout to this branch: solution-final
-To view the react solution checkout to this branch: react-solution
+This command will start both the nodejs server and the React server in one terminal tab.
