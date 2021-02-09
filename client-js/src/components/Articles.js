@@ -1,72 +1,58 @@
-import React, { Component } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Article from "./Article";
 import Loading from "./Loading";
 
-class Articles extends Component {
-  constructor(props) {
-    super(props);
+const Articles = () => {
+  const [articles, setArticles] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasEnded, setHasEnded] = useState(false); // to indicate whether or not we've fetched all the records
+  const [loading, setLoading] = useState(true);
 
-    this.state = {
-      articles: [],
-      page: 1,
-      hasEnded: false, // to indicate whether or not we've fetched all the records
-      loading: true,
-    };
+  const container = useRef(null);
 
-    this.container = React.createRef();
-  }
-
-  componentDidMount() {
-    this.fetch();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.articles.length !== this.state.articles.length) {
-      document.addEventListener("scroll", this.trackScrolling);
+  useEffect(() => {
+    if (!hasEnded) {
+      fetch(page);
     }
-  }
 
-  componentWillUnmount() {
-    document.removeEventListener("scroll", this.trackScrolling);
-  }
+    return () => {
+      document.removeEventListener("scroll", trackScrolling);
+    };
+  }, [page]);
 
-  trackScrolling = () => {
+  useEffect(() => {
+    document.addEventListener("scroll", trackScrolling);
+  }, [articles]);
+
+  const trackScrolling = () => {
     if (
-      this.container.current.getBoundingClientRect().bottom <=
-      window.innerHeight
+      container.current.getBoundingClientRect().bottom <= window.innerHeight
     ) {
-      console.log("We've reached the bottom!");
+      setPage(page + 1);
 
-      if (!this.state.hasEnded) {
-        this.setState({ page: this.state.page + 1 }, () => {
-          this.fetch();
-        });
-      }
-
-      document.removeEventListener("scroll", this.trackScrolling);
+      document.removeEventListener("scroll", trackScrolling);
     }
   };
 
-  async fetch() {
-    this.setState({ loading: true });
+  const fetch = async () => {
+    setLoading(true);
+
     const { data } = await axios.get(
-      `http://localhost:4080/api/articles?page=${this.state.page}`
+      `http://localhost:4080/api/articles?page=${page}`
     );
 
     if (data.articlesData.length === 0) {
-      this.setState({ hasEnded: true });
+      setHasEnded(true);
     } else {
-      this.setState({
-        articles: [...this.state.articles, ...data.articlesData],
-      });
+      setArticles([...articles, ...data.articlesData]);
     }
 
-    this.setState({ loading: false });
-  }
+    setLoading(false);
+  };
 
-  renderArticles() {
-    return this.state.articles.map((article) => {
+  const renderArticles = () => {
+    return articles.map((article) => {
       return (
         <Article
           key={article._id}
@@ -78,23 +64,21 @@ class Articles extends Component {
         />
       );
     });
-  }
+  };
 
-  render() {
-    if (!this.state.articles) return <div />;
+  if (!articles) return <div />;
 
-    return (
-      <div ref={this.container}>
-        {this.renderArticles()}
-        {this.state.loading && <Loading />}
-        {this.state.hasEnded && (
-          <div className="end-articles-msg">
-            <p>You're all caught up!</p>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div ref={container}>
+      {renderArticles()}
+      {loading && <Loading />}
+      {hasEnded && (
+        <div className="end-articles-msg">
+          <p>You're all caught up!</p>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Articles;
