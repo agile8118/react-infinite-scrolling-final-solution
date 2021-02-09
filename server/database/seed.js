@@ -148,7 +148,7 @@ function random(arr) {
     // In case we want to use MongoDB
     case "mongodb":
       console.log("MongoDB database will be used.");
-      mongoose.connect(keys.mlab_url, {
+      mongoose.connect(keys.mongodb_url, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
       });

@@ -52,10 +52,8 @@
   app.listen(port, () => {
     console.log(
       "----------------------------------\n" +
-        "Server has successfully started." +
-        "\nYou can now open the app in the browser: http://localhost:" +
-        port +
-        "\n----------------------------------"
+        "Server has successfully started on port " +
+        port
     );
   });
 })();

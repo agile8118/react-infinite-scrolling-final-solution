@@ -1,4 +1,4 @@
 module.exports = {
-  mlab_url: process.env.MLABURL,
+  mongodb_url: process.env.MLABURL,
   mysql_url: process.env.MYSQLURL,
 };

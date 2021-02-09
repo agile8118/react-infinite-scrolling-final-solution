@@ -4,7 +4,7 @@ const keys = require("../../config/keys");
 
 // Connect to the MongoDB database
 mongoose.connect(
-  keys.mlab_url,
+  keys.mongodb_url,
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,
